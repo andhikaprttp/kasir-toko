@@ -7,8 +7,8 @@ body {
 }
 
 .header {
-  background-color:#f5f5f5;
-  border-radius: 35px;
+  background-color: #f5f5f5;
+  padding: 2rem;
 }
 
 /* Style untuk judul */
