@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kasir Sederhana</title>
+</head>
+<body>
+	<h1>Kasir Sederhana</h1>
+	
+	<form>
+		<label for="barang">Barang:</label>
+		<input type="text" id="barang"><br><br>
+		
+		<label for="harga">Harga:</label>
+		<input type="number" id="harga"><br><br>
+		
+		<button type="button" onclick="tambahBarang()">Tambah Barang</button><br><br>
+	</form>
+	
+	<h2>Daftar Barang</h2>
+	<ul id="daftarBarang"></ul>
+	
+	<h2>Total Harga</h2>
+	<p id="totalHarga">0</p>
+	
+	<script>
+		var daftarBelanja = []; // Array untuk menyimpan daftar barang dan harga
+		var totalHarga = 0; // Variabel untuk menyimpan total harga
+		
+		// Fungsi untuk menambah barang ke daftar belanja
+		function tambahBarang() {
+			var barang = document.getElementById("barang").value;
+			var harga = parseInt(document.getElementById("harga").value);
+			
+			// Validasi input
+			if (barang === "" || isNaN(harga)) {
+				alert("Input tidak valid!");
+				return;
+			}
+			
+			// Tambahkan barang dan harga ke array
+			daftarBelanja.push({barang: barang, harga: harga});
+			
+			// Tampilkan daftar barang
+			var daftarBarangElem = document.getElementById("daftarBarang");
+			var liElem = document.createElement("li");
+			liElem.innerHTML = barang + " - Rp " + harga;
+			daftarBarangElem.appendChild(liElem);
+			
+			// Tambahkan harga ke total harga
+			totalHarga += harga;
+			document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga;
+			
+			// Reset input
+			document.getElementById("barang").value = "";
+			document.getElementById("harga").value = "";
+		}
+	</script>
+</body>
+</html>
