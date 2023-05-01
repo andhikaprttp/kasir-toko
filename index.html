@@ -1,86 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Kasir Sederhana</title>
-	<meta charset="UTF-8">
+  <title>Kasir Sederhana</title>
+  <meta charset="UTF-8">
 </head>
 <body>
-	<h1>Kasir Sederhana</h1>
+  <h1>Kasir Sederhana</h1>
 
-	<label for="barang">Barang:</label>
-	<input type="text" id="barang">
-	<label for="jumlah">Jumlah:</label>
-	<input type="number" id="jumlah" min="1">
-	<button onclick="tambahBarang()">Tambahkan</button>
+  <label for="barang">Barang:</label>
+  <input type="text" id="barang">
+  <label for="jumlah">Jumlah:</label>
+  <input type="number" id="jumlah" min="1">
+  <button onclick="tambahBarang()">Tambahkan</button>
 
-	<ul id="daftarBarang"></ul>
+  <ul id="daftarBarang"></ul>
 
-	<p>Total Harga: <span id="totalHarga">Rp 0</span></p>
+  <p>
+    Total Harga: <span id="totalHarga">Rp 0</span>
+  </p>
 
-	<label for="bayar">Bayar:</label>
-	<input type="number" id="bayar">
-	<button onclick="hitungKembalian()">Bayar</button>
-	<p>Kembalian: <span id="kembalian">Rp 0</span></p>
+  <label for="bayar">Bayar:</label>
+  <input type="number" id="bayar">
+  <button onclick="hitungKembalian()">Bayar</button>
+  <p>
+    Kembalian: <span id="kembalian">Rp 0</span>
+  </p>
 
-	<script>
-		var daftarHarga = {
-			"Kopi": 5000,
-			"Teh": 3000,
-			"Roti": 10000,
-			"Keju": 15000,
-			"Sosis": 20000
-		};
+  <script>
+    var daftarHarga = {
+      "Kopi": 5000,
+      "Teh": 3000,
+      "Roti": 10000,
+      "Keju": 15000,
+      "Sosis": 20000
+    };
 
-		var daftarBelanja = [];
-		var daftarJumlah = {}; // objek untuk menyimpan jumlah barang yang sama
+    var daftarBelanja = [];
+    var daftarJumlah = {}; // objek untuk menyimpan jumlah barang yang sama
 
-		var totalHarga = 0;
+    var totalHarga = 0;
 
-		// fungsi untuk menambahkan barang ke daftar belanja
-		function tambahBarang() {
-			var barang = document.getElementById("barang").value;
-			var jumlah = parseInt(document.getElementById("jumlah").value);
+    // fungsi untuk menambahkan barang ke daftar belanja
+    function tambahBarang() {
+      var barang = document.getElementById("barang").value;
+      var jumlah = parseInt(document.getElementById("jumlah").value);
 
-			// mencari harga barang di daftarHarga
-			var harga = daftarHarga[barang];
-			if (!harga) {
-				alert("Barang tidak ditemukan di daftar harga!");
-				return;
-			}
+      // mencari harga barang di daftarHarga
+      var harga = daftarHarga[barang];
+      if (!harga) {
+        alert("Barang tidak ditemukan di daftar harga!");
+        return;
+      }
 
-			// menambahkan barang dan harga ke daftarBelanja
-			if (daftarJumlah[barang]) { // jika barang sudah ada di daftarJumlah
-				daftarJumlah[barang] += jumlah; // tambahkan jumlah barang yang baru
-			} else {
-				daftarBelanja.push(barang + " (Rp " + harga.toFixed(2) + ")"); // tambahkan barang dan harga ke daftarBelanja
-				daftarJumlah[barang] = jumlah; // simpan jumlah barang yang baru
-			}
+      // menambahkan barang dan harga ke daftarBelanja
+      if (daftarJumlah[barang]) {
+        // jika barang sudah ada di daftarJumlah
+        daftarJumlah[barang] += jumlah; // tambahkan jumlah barang yang baru
+      } else {
+        daftarBelanja.push(barang + " (Rp " + harga.toFixed(2) + ")"); // tambahkan barang dan harga ke daftarBelanja
+        daftarJumlah[barang] = jumlah; // simpan jumlah barang yang baru
+      }
 
-			// menampilkan daftar barang di daftarBarang
-			var daftarBarang = document.getElementById("daftarBarang");
-			daftarBarang.innerHTML = "";
-			for (var i = 0; i < daftarBelanja.length; i++) {
-				var li = document.createElement("li");
-				li.appendChild(document.createTextNode(daftarBelanja[i] + " x" + daftarJumlah[daftarBelanja[i].split(" ")[0]])); // menambahkan jumlah barang yang sama
-				daftarBarang.appendChild(li);
-			}
+      // menampilkan daftar barang di daftarBarang
+      var daftarBarang = document.getElementById("daftarBarang");
+      daftarBarang.innerHTML = "";
+      for (var i = 0; i < daftarBelanja.length; i++) {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(daftarBelanja[i] + " x" + daftarJumlah[daftarBelanja[i].split(" ")[0]])); // menambahkan jumlah barang yang sama
+        daftarBarang.appendChild(li);
+      }
 
-			// menghitung total harga
-			totalHarga += harga * jumlah;
-			document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(2);
-		}
+      // menghitung total harga
+      totalHarga += harga * jumlah;
+      document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(2);
+    }
 
-		// fungsi untuk menghitung kembalian
-		function hitungKembalian() {
-			bayar = parseFloat(document.getElementById("bayar").value);
-		if (isNaN(bayar) || bayar < totalHarga) {
-alert("Input bayar tidak valid!");
-return;
-}
-		// menghitung kembalian
-		var kembalian = bayar - totalHarga;
-		document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
-	}
-</script>
+    // fungsi untuk menghitung kembalian
+    function hitungKembalian() {
+      bayar = parseFloat(document.getElementById("bayar").value);
+      if (isNaN(bayar) || bayar < totalHarga) {
+        alert("Input bayar tidak valid!");
+        return;
+      }
+      // menghitung kembalian
+      var kembalian = bayar - totalHarga;
+      document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
+    }
+  </script>
 </body>
 </html>
