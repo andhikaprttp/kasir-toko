@@ -37,14 +37,14 @@
   </p>
 
   <script>
-    var daftarBelanja = []; // Array untuk menyimpan daftar barang dan harga
-    var totalHarga = 0; // Variabel untuk menyimpan total harga
-    var bayar = 0; // Variabel untuk menyimpan jumlah uang yang dibayar
+    let daftarBelanja = []; // Array untuk menyimpan daftar barang dan harga
+   let totalHarga = 0; // Variabel untuk menyimpan total harga
+    let bayar = 0; // Variabel untuk menyimpan jumlah uang yang dibayar
 
     // Fungsi untuk menambah barang ke daftar belanja
     function tambahBarang() {
-      var barang = document.getElementById("barang").value;
-      var harga = parseFloat(document.getElementById("harga").value);
+      let barang = document.getElementById("barang").value;
+      let harga = parseFloat(document.getElementById("harga").value);
 
       // Validasi input
       if (barang === "" || isNaN(harga)) {
@@ -58,8 +58,8 @@
       });
 
       // Tampilkan daftar barang
-      var daftarBarangElem = document.getElementById("daftarBarang");
-      var liElem = document.createElement("li");
+      let daftarBarangElem = document.getElementById("daftarBarang");
+      let liElem = document.createElement("li");
       liElem.innerHTML = barang + " - Rp " + harga.toFixed(2);
       daftarBarangElem.appendChild(liElem);
 
@@ -83,7 +83,7 @@
       }
 
       // Hitung kembalian
-      var kembalian = bayar - totalHarga;
+      let kembalian = bayar - totalHarga;
       document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
     }
   </script>
