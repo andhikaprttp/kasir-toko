@@ -2,84 +2,75 @@
 <html>
 <head>
 	<title>Kasir Sederhana</title>
+	<meta charset="UTF-8">
 </head>
 <body>
-	<h1>Kasir UD RESTU</h1>
-	
-	<form>
-		<label for="barang">Barang:</label>
-		<input type="text" id="barang"><br><br>
-		
-		<label for="harga">Harga:</label>
-		<input type="number" id="harga" step="0.01"><br><br>
-		
-		<button type="button" onclick="tambahBarang()">Tambah Barang</button><br><br>
-	</form>
-	
-	<h2>Daftar Barang</h2>
+	<h1>Kasir Sederhana</h1>
+
+	<label for="barang">Barang:</label>
+	<input type="text" id="barang">
+	<label for="jumlah">Jumlah:</label>
+	<input type="number" id="jumlah" min="1">
+	<button onclick="tambahBarang()">Tambahkan</button>
+
 	<ul id="daftarBarang"></ul>
-	
-	<h2>Total Harga</h2>
-	<p id="totalHarga">Rp 0</p>
-	
-	<form>
-		<label for="bayar">Bayar:</label>
-		<input type="number" id="bayar" step="0.01"><br><br>
-		
-		<button type="button" onclick="hitungKembalian()">Hitung Kembalian</button><br><br>
-	</form>
-	
-	<h2>Kembalian</h2>
-	<p id="kembalian">Rp 0</p>
-	
+
+	<p>Total Harga: <span id="totalHarga">Rp 0</span></p>
+
+	<label for="bayar">Bayar:</label>
+	<input type="number" id="bayar">
+	<button onclick="hitungKembalian()">Bayar</button>
+	<p>Kembalian: <span id="kembalian">Rp 0</span></p>
+
 	<script>
-		var daftarBelanja = []; // Array untuk menyimpan daftar barang dan harga
-		var totalHarga = 0; // Variabel untuk menyimpan total harga
-		var bayar = 0; // Variabel untuk menyimpan jumlah uang yang dibayar
-		
-		// Fungsi untuk menambah barang ke daftar belanja
+		var daftarHarga = {
+			"Kopi": 5000,
+			"Teh": 3000,
+			"Roti": 10000,
+			"Keju": 15000,
+			"Sosis": 20000
+		};
+
+		var daftarBelanja = [];
+		var daftarJumlah = {}; // objek untuk menyimpan jumlah barang yang sama
+
+		var totalHarga = 0;
+
+		// fungsi untuk menambahkan barang ke daftar belanja
 		function tambahBarang() {
 			var barang = document.getElementById("barang").value;
-			var harga = parseFloat(document.getElementById("harga").value);
-			
-			// Validasi input
-			if (barang === "" || isNaN(harga)) {
-				alert("Input tidak valid!");
+			var jumlah = parseInt(document.getElementById("jumlah").value);
+
+			// mencari harga barang di daftarHarga
+			var harga = daftarHarga[barang];
+			if (!harga) {
+				alert("Barang tidak ditemukan di daftar harga!");
 				return;
 			}
-			
-			// Tambahkan barang dan harga ke array
-			daftarBelanja.push({barang: barang, harga: harga});
-			
-			// Tampilkan daftar barang
-			var daftarBarangElem = document.getElementById("daftarBarang");
-			var liElem = document.createElement("li");
-			liElem.innerHTML = barang + " - Rp " + harga.toFixed(2);
-			daftarBarangElem.appendChild(liElem);
-			
-			// Tambahkan harga ke total harga
-			totalHarga += harga;
+
+			// menambahkan barang dan harga ke daftarBelanja
+			if (daftarJumlah[barang]) { // jika barang sudah ada di daftarJumlah
+				daftarJumlah[barang] += jumlah; // tambahkan jumlah barang yang baru
+			} else {
+				daftarBelanja.push(barang + " (Rp " + harga.toFixed(2) + ")"); // tambahkan barang dan harga ke daftarBelanja
+				daftarJumlah[barang] = jumlah; // simpan jumlah barang yang baru
+			}
+
+			// menampilkan daftar barang di daftarBarang
+			var daftarBarang = document.getElementById("daftarBarang");
+			daftarBarang.innerHTML = "";
+			for (var i = 0; i < daftarBelanja.length; i++) {
+				var li = document.createElement("li");
+				li.appendChild(document.createTextNode(daftarBelanja[i] + " x" + daftarJumlah[daftarBelanja[i].split(" ")[0]])); // menambahkan jumlah barang yang sama
+				daftarBarang.appendChild(li);
+			}
+
+			// menghitung total harga
+			totalHarga += harga * jumlah;
 			document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(2);
-			
-			// Reset input
-			document.getElementById("barang").value = "";
-			document.getElementById("harga").value = "";
 		}
-		
-		// Fungsi untuk menghitung kembalian
+
+		// fungsi untuk menghitung kembalian
 		function hitungKembalian() {
 			bayar = parseFloat(document.getElementById("bayar").value);
-			
-			// Validasi input
-			if (isNaN(bayar) || bayar < totalHarga) {
-				alert("Input tidak valid atau jumlah uang yang dibayar kurang!");
-				return;
-			}
-			
-			// Hitung kembalian
-			var kembalian = bayar - totalHarga;
-			document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
-		}
-	</script>
-</body>
-</html>
+		
