@@ -219,12 +219,12 @@ p {
       // Tampilkan daftar barang
       let daftarBarangElem = document.getElementById("daftarBarang");
       let liElem = document.createElement("li");
-      liElem.innerHTML = barang + " - Rp " + harga.toFixed(2);
+      liElem.innerHTML = barang + " - Rp " + harga.toFixed(3);
       daftarBarangElem.appendChild(liElem);
 
       // Tambahkan harga ke total harga
       totalHarga += harga;
-      document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(2);
+      document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(3);
 
       // Reset input
       document.getElementById("barang").value = "";
