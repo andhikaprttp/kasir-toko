@@ -1,85 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Kasir Sederhana</title>
+  <title>Kasir Sederhana</title>
 </head>
 <body>
-	<h1>Kasir Sederhana</h1>
-	
-	<form>
-		<label for="barang">Barang:</label>
-		<input type="text" id="barang"><br><br>
-		
-		<label for="harga">Harga:</label>
-		<input type="number" id="harga" step="0.01"><br><br>
-		
-		<button type="button" onclick="tambahBarang()">Tambah Barang</button><br><br>
-	</form>
-	
-	<h2>Daftar Barang</h2>
-	<ul id="daftarBarang"></ul>
-	
-	<h2>Total Harga</h2>
-	<p id="totalHarga">Rp 0</p>
-	
-	<form>
-		<label for="bayar">Bayar:</label>
-		<input type="number" id="bayar" step="0.01"><br><br>
-		
-		<button type="button" onclick="hitungKembalian()">Hitung Kembalian</button><br><br>
-	</form>
-	
-	<h2>Kembalian</h2>
-	<p id="kembalian">Rp 0</p>
-	
-	<script>
-		var daftarBelanja = []; // Array untuk menyimpan daftar barang dan harga
-		var totalHarga = 0; // Variabel untuk menyimpan total harga
-		var bayar = 0; // Variabel untuk menyimpan jumlah uang yang dibayar
-		
-		// Fungsi untuk menambah barang ke daftar belanja
-		function tambahBarang() {
-			var barang = document.getElementById("barang").value;
-			var harga = parseFloat(document.getElementById("harga").value);
-			
-			// Validasi input
-			if (barang === "" || isNaN(harga)) {
-				alert("Input tidak valid!");
-				return;
-			}
-			
-			// Tambahkan barang dan harga ke array
-			daftarBelanja.push({barang: barang, harga: harga});
-			
-			// Tampilkan daftar barang
-			var daftarBarangElem = document.getElementById("daftarBarang");
-			var liElem = document.createElement("li");
-			liElem.innerHTML = barang + " - Rp " + harga.toFixed(2);
-			daftarBarangElem.appendChild(liElem);
-			
-			// Tambahkan harga ke total harga
-			totalHarga += harga;
-			document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(2);
-			
-			// Reset input
-			document.getElementById("barang").value = "";
-			document.getElementById("harga").value = "";
-		}
-		
-		// Fungsi untuk menghitung kembalian
-		function hitungKembalian() {
-			bayar = parseFloat(document.getElementById("bayar").value);
-			
-			// Validasi input
-			if (isNaN(bayar) || bayar < totalHarga) {
-				alert("Input tidak valid atau jumlah uang yang dibayar kurang!");
-				return;
-			}
-			
-			// Hitung kembalian
-			var kembalian = bayar - totalHarga;
-			document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
-		}
-	</script>
+  <h1>Kasir Sederhana</h1>
+
+  <form>
+    <label for="barang">Barang:</label>
+    <input type="text" id="barang"><br><br>
+
+    <label for="harga">Harga:</label>
+    <input type="number" id="harga" step="0.01"><br><br>
+
+    <button type="button" onclick="tambahBarang()">Tambah Barang</button><br><br>
+  </form>
+
+  <h2>Daftar Barang</h2>
+  <ul id="daftarBarang"></ul>
+
+  <h2>Total Harga</h2>
+  <p id="totalHarga">
+    Rp 0
+  </p>
+
+  <form>
+    <label for="bayar">Bayar:</label>
+    <input type="number" id="bayar" step="0.01"><br><br>
+
+    <button type="button" onclick="hitungKembalian()">Hitung Kembalian</button><br><br>
+  </form>
+
+  <h2>Kembalian</h2>
+  <p id="kembalian">
+    Rp 0
+  </p>
+
+  <script>
+    var daftarBelanja = []; // Array untuk menyimpan daftar barang dan harga
+    var totalHarga = 0; // Variabel untuk menyimpan total harga
+    var bayar = 0; // Variabel untuk menyimpan jumlah uang yang dibayar
+
+    // Fungsi untuk menambah barang ke daftar belanja
+    function tambahBarang() {
+      var barang = document.getElementById("barang").value;
+      var harga = parseFloat(document.getElementById("harga").value);
+
+      // Validasi input
+      if (barang === "" || isNaN(harga)) {
+        alert("Input tidak valid!");
+        return;
+      }
+
+      // Tambahkan barang dan harga ke array
+      daftarBelanja.push({
+        barang: barang, harga: harga
+      });
+
+      // Tampilkan daftar barang
+      var daftarBarangElem = document.getElementById("daftarBarang");
+      var liElem = document.createElement("li");
+      liElem.innerHTML = barang + " - Rp " + harga.toFixed(2);
+      daftarBarangElem.appendChild(liElem);
+
+      // Tambahkan harga ke total harga
+      totalHarga += harga;
+      document.getElementById("totalHarga").innerHTML = "Rp " + totalHarga.toFixed(2);
+
+      // Reset input
+      document.getElementById("barang").value = "";
+      document.getElementById("harga").value = "";
+    }
+
+    // Fungsi untuk menghitung kembalian
+    function hitungKembalian() {
+      bayar = parseFloat(document.getElementById("bayar").value);
+
+      // Validasi input
+      if (isNaN(bayar) || bayar < totalHarga) {
+        alert("Input tidak valid atau jumlah uang yang dibayar kurang!");
+        return;
+      }
+
+      // Hitung kembalian
+      var kembalian = bayar - totalHarga;
+      document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
+    }
+  </script>
 </body>
 </html>
