@@ -77,3 +77,10 @@
 alert("Input bayar tidak valid!");
 return;
 }
+		// menghitung kembalian
+		var kembalian = bayar - totalHarga;
+		document.getElementById("kembalian").innerHTML = "Rp " + kembalian.toFixed(2);
+	}
+</script>
+</body>
+</html>
