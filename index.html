@@ -73,4 +73,7 @@
 		// fungsi untuk menghitung kembalian
 		function hitungKembalian() {
 			bayar = parseFloat(document.getElementById("bayar").value);
-		
+		if (isNaN(bayar) || bayar < totalHarga) {
+alert("Input bayar tidak valid!");
+return;
+}
